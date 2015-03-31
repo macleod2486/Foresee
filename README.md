@@ -1,3 +1,3 @@
 # Foresee
 
-a [Sails](http://sailsjs.org) application
+A Magic the Gathering price watcher.  
