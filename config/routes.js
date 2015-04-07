@@ -34,6 +34,11 @@ module.exports.routes = {
 
   '/': {
     view: 'homepage'
+  },
+
+  '/Gatherer': {
+	  controller: 'GathererController',
+	  action: 'process',
   }
 
   /***************************************************************************
