@@ -30,10 +30,41 @@ module.exports = {
 			data('td.magicSetCol a').each(
 				function()
 				{
-					links.push(data(this).attr('href'));
-					console.log(data(this).text());	
+					if(data(this) != "")
+					{
+						links.push("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());
+						console.log("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());	
+					}
 				}
 			);
+
+			//Prepare for a pretty deep dive, will be cleaned up later
+			links.forEach(
+					function(entry)
+					{
+						req = new XMLHttpRequest();
+						req.open('GET', encodeURI(entry), false);
+						req.send();
+						console.log("Entering");
+
+						if(req.status == 200)
+						{
+							text = req.responseText + "";		
+							text.replace(/<&#91;^>&#93;*>/g, "");
+							data = cheerio.load(text);
+
+							table = cheerio.load(data('table')[2]);
+
+							table('tr').each(
+									function()
+									{
+										console.log(table(this).text());
+									}
+							);
+
+						}
+					}
+				     );
 
 			console.log("Finished");
 		}
