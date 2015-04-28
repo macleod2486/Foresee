@@ -7,6 +7,48 @@
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var cheerio = require("cheerio");
 
+
+function getRows(linkArray)
+{
+	var text;
+	var req;
+	var data;
+		
+	linkArray.forEach(
+
+		function(entry)
+		{
+			req = new XMLHttpRequest();
+			req.open('GET', encodeURI(entry), false);
+			req.send();
+
+			console.log("Entering");
+
+			if(req.status == 200)
+			{
+				text = req.responseText + "";		
+				text.replace(/<&#91;^>&#93;*>/g, "");
+				data = cheerio.load(text);
+
+				var tablerow = cheerio.load(data('table')[2]);
+
+				var tableItem;
+
+				tablerow('tr').each(
+					function()
+					{
+						tableItem = cheerio.load(tablerow('td')[0]);
+						console.log(tableItem.text());
+					}
+				);
+
+			}
+			
+		}
+	     );
+
+}
+
 module.exports = {
 
 	process: function(req, res)
@@ -33,39 +75,13 @@ module.exports = {
 					if(data(this) != "")
 					{
 						links.push("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());
-						console.log("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());	
+						console.log("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());
 					}
 				}
 			);
 
-			//Prepare for a pretty deep dive, will be cleaned up later
-			links.forEach(
-					function(entry)
-					{
-						req = new XMLHttpRequest();
-						req.open('GET', encodeURI(entry), false);
-						req.send();
-						console.log("Entering");
-
-						if(req.status == 200)
-						{
-							text = req.responseText + "";		
-							text.replace(/<&#91;^>&#93;*>/g, "");
-							data = cheerio.load(text);
-
-							table = cheerio.load(data('table')[2]);
-
-							table('tr').each(
-									function()
-									{
-										console.log(table(this).text());
-									}
-							);
-
-						}
-					}
-				     );
-
+			getRows(links);
+		
 			console.log("Finished");
 		}
 
@@ -74,8 +90,9 @@ module.exports = {
 			console.log("Page not loaded");
 		}
 
-		return "Finished";
+		res.view();
+
 	}
-	
+
 };
 
