@@ -7,7 +7,6 @@
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var cheerio = require("cheerio");
 
-
 function getRows(linkArray)
 {
 	var text;
@@ -34,11 +33,20 @@ function getRows(linkArray)
 
 				var tableItem;
 
+				var temp;
+
+				var splitter;
+
 				tablerow('tr').each(
 					function()
 					{
-						tableItem = cheerio.load(tablerow('td')[0]);
-						console.log(tableItem.text());
+						temp = tablerow(this).text();
+						splitter = temp.split("$");
+						console.log(splitter[0]);
+						console.log(splitter[1]);
+						console.log(splitter[2]);
+						console.log(splitter[3]);
+					
 					}
 				);
 
@@ -46,7 +54,6 @@ function getRows(linkArray)
 			
 		}
 	     );
-
 }
 
 module.exports = {
@@ -80,6 +87,11 @@ module.exports = {
 				}
 			);
 
+			console.log("");
+			console.log("Get Rows");
+			console.log("");
+
+			//Gets all the rows
 			getRows(links);
 		
 			console.log("Finished");
