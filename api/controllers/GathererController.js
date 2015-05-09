@@ -57,11 +57,6 @@ function getData(linkArray)
 						lowPrice.push(parseFloat(splitter[1]));
 						medPrice.push(parseFloat(splitter[2]));
 						highPrice.push(parseFloat(splitter[3]));
-
-						console.log(splitter[0]);
-						console.log(splitter[1]);
-						console.log(splitter[2]);
-						console.log(splitter[3]);
 					}
 				);
 
@@ -70,12 +65,15 @@ function getData(linkArray)
 			else
 			{
 				completed = false;
+				console.log("Error failed");
+				return;
 			}
 
-			//Attempts to insert the gathered data.
-			insertData();
 		}
 	     );
+
+	//Attempts to insert the gathered data.
+	insertData();
 }
 
 //Insert data once it is completely gathered
@@ -94,8 +92,6 @@ function insertData()
 		cardName.forEach(
 					function(entry)
 					{
-						console.log(entry);
-						
 						name = cardName[index]
 						low = lowPrice[index].toString();
 						med = medPrice[index];
@@ -117,11 +113,6 @@ function insertData()
 
 				);
 	}	
-}
-
-function error(error,created)
-{
-	console.log("An error has occurred");
 }
 
 module.exports = {
@@ -150,14 +141,9 @@ module.exports = {
 					if(data(this) != "")
 					{
 						links.push("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());
-						console.log("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());
 					}
 				}
 			);
-
-			console.log("");
-			console.log("Get Rows");
-			console.log("");
 
 			//Gets all the rows
 			getData(links);
