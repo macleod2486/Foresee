@@ -143,7 +143,7 @@ module.exports = {
 			var links = [];
 
 			//Parses the html to get the links
-			/*var data = cheerio.load(text);
+			var data = cheerio.load(text);
 			data('td.magicSetCol a').each(
 				function()
 				{
@@ -153,9 +153,7 @@ module.exports = {
 						console.log("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());
 					}
 				}
-			);*/
-
-			links.push("http://magic.tcgplayer.com/db/price_guide.asp?setname=Dragons of Tarkir");
+			);
 
 			console.log("");
 			console.log("Get Rows");
