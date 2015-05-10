@@ -21,6 +21,8 @@ function getData(linkArray)
 	var text;
 	var req;
 	var data;
+
+	console.log("Gathering data");
 	
 	linkArray.forEach(
 
@@ -29,8 +31,6 @@ function getData(linkArray)
 			req = new XMLHttpRequest();
 			req.open('GET', encodeURI(entry), false);
 			req.send();
-
-			console.log("Entering");
 
 			if(req.status == 200)
 			{
@@ -65,7 +65,7 @@ function getData(linkArray)
 			else
 			{
 				completed = false;
-				console.log("Error failed");
+				console.log("Error: failed");
 				return;
 			}
 
@@ -115,6 +115,17 @@ function insertData()
 	}	
 }
 
+//Resets and frees up memory.
+function reset()
+{
+	cardName = [];
+	lowPrice = [];
+	medPrice = [];
+	highPrice = [];
+
+	completed = true;
+}
+
 module.exports = {
 
 	process: function(req, res)
@@ -155,6 +166,8 @@ module.exports = {
 		{
 			console.log("Page not loaded");
 		}
+
+		reset();
 
 		res.view();
 	}
