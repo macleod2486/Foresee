@@ -22,7 +22,7 @@ function getData(linkArray)
 	var req;
 	var data;
 
-	console.log("Gathering data");
+	sails.log("Gathering data");
 	
 	linkArray.forEach(
 
@@ -65,7 +65,7 @@ function getData(linkArray)
 			else
 			{
 				completed = false;
-				console.log("Error: failed");
+				sails.log("Error: Failed gathering data");
 				return;
 			}
 
@@ -81,6 +81,8 @@ function insertData()
 {
 	if(completed)
 	{
+		sails.log("Inserting data");
+
 		var query = "";
 		var index = 0;
 
@@ -103,7 +105,7 @@ function insertData()
 								{
 									if(err != null) 
 									{
-										console.log("Error "+err);
+										sails.log("Error "+err);
 									}
 								}
 
@@ -118,6 +120,8 @@ function insertData()
 //Resets and frees up memory.
 function reset()
 {
+	sails.log("Clearing data");
+
 	cardName = [];
 	lowPrice = [];
 	medPrice = [];
@@ -159,12 +163,12 @@ module.exports = {
 			//Gets all the rows
 			getData(links);
 		
-			console.log("Finished");
+			sails.log("Finished");
 		}
 
 		else
 		{
-			console.log("Page not loaded");
+			sails.log("Page not loaded");
 		}
 
 		reset();

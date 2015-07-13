@@ -10,20 +10,29 @@
  * http://sailsjs.org/#/documentation/concepts/Logging
  */
 
-module.exports.log = {
+var winston = require('winston');
+module.exports = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Valid `level` configs: i.e. the minimum log level to capture with        *
-  * sails.log.*()                                                            *
-  *                                                                          *
-  * The order of precedence for log levels from lowest to highest is:        *
-  * silly, verbose, info, debug, warn, error                                 *
-  *                                                                          *
-  * You may also set the level to "silent" to suppress all logs.             *
-  *                                                                          *
-  ***************************************************************************/
-
-  // level: 'info'
-
+    'log': {
+        'colors': false,
+        'custom': new (winston.Logger)({
+            'transports': [
+                new (winston.transports.Console)({
+                    'level': 'info',
+                    'colorize': true,
+                    'timestamp': false,
+                    'json': false
+                }),
+                new winston.transports.File({
+                    'level': 'debug',
+                    'colorize': false,
+                    'timestamp': true,
+                    'json': false,
+                    'filename': './logs/sails.log',
+                    'maxsize': 5120000,
+                    'maxFiles': 3
+                })
+            ]
+        })
+    }
 };
