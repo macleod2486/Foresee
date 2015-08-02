@@ -63,6 +63,15 @@ module.exports.connections = {
    // user: 'test',
    // password: 'test',
     database: 'Foresee'
+  },
+
+  redis: {
+	  adapter:'sails-redis',
+	  config:
+	  {
+		host: 'localhost',
+		port: 6397
+	  }
   }
 
   /***************************************************************************
