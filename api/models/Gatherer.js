@@ -33,6 +33,11 @@ module.exports = {
 	highPrice:
 	{
 		type:'float'
+	},
+
+	set:
+	{
+		type:'string'
 	}
 
   }
