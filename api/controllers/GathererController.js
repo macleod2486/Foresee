@@ -118,6 +118,8 @@ module.exports = {
 			sails.log("Page not loaded");
 		}
 
+		sails.log("Processed "+count);
+
 		res.view({count: count});
 	}
 
