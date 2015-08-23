@@ -2,13 +2,57 @@
 	<title>Home page</title>
 
 	<table class="table">
+
 		<th>
 			Card
 		</th>
 
-		<td>
-			
-		</td>
+		<th>
+			Low
+		</th>
+
+		<th>
+			Medium
+		</th>
+
+		<th>
+			High
+		</th>
+
+		<th>
+			Set
+		</th>
+
+		<%
+		var card;
+		for(var index = 0; index < cards.length; index++)
+		{
+			card = cards[index];
+			%>
+			<tr>
+
+				<td>
+					<%=card['nameOfCard']%>
+				</td>
+
+				<td>
+					<%=card['lowPrice']%>
+				</td>
+
+				<td>
+					<%=card['mediumPrice']%>
+				</td>
+
+				<td>
+					<%=card['highPrice']%>
+				</td>
+
+				<td>
+					<%=card['set']%>
+				</td>
+
+			</tr>
+		<% } %>
 
 	</table>
 </div>

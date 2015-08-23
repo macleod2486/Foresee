@@ -10,7 +10,15 @@ module.exports =
 
 	list: function(req,res)
 	{
-		res.view();
+		sails.models.gatherer.find({ nameOfCard : {'!': 'NULL'}}).exec(
+				
+					function(error, cards)
+					{
+						sails.log("Size "+cards.length);
+						res.view({cards: cards});
+					}
+
+				);
 	}
 
 };
