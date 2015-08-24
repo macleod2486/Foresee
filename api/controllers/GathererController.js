@@ -11,9 +11,6 @@ var cheerio = require("cheerio");
 //Count of records
 var count = 0;
 
-//Setnames
-var setname = [];
-
 //Data harvester
 function getData(linkArray)
 {
@@ -53,8 +50,8 @@ function getData(linkArray)
 						temp = tablerow(this).text();
 
 						splitter = temp.split("$");
-
-						Gatherer.create({nameOfCard:splitter[0] , lowPrice:parseFloat(splitter[1]) , mediumPrice:parseFloat(splitter[2]), highPrice:parseFloat(splitter[3]), set:setname[index]}).exec(
+						
+						Gatherer.create({nameOfCard:splitter[0] , lowPrice:parseFloat(splitter[1]) , mediumPrice:parseFloat(splitter[2]), highPrice:parseFloat(splitter[3]), set:entry.split("=")[1]}).exec(
 
 								function callback(err, created)
 								{
@@ -67,7 +64,6 @@ function getData(linkArray)
 						);
 
 						count++;
-						index++;
 					}
 				);
 
@@ -109,7 +105,6 @@ module.exports = {
 					if(data(this) != "")
 					{
 						links.push("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());
-						setname.push(data(this).text());
 					}
 				}
 			);
