@@ -1,6 +1,13 @@
 <div>
 	<title>Home page</title>
 
+	<div class="menu">
+		<form role="search" method="POST">
+			<input type="text" name = "search" value="Card name" />
+			<button type="submit">Search</>
+		</form>	
+	</div>
+
 	<table class="table">
 
 		<th>
@@ -24,10 +31,13 @@
 		</th>
 
 		<%
+
 		var card;
+
 		for(var index = 0; index < cards.length; index++)
 		{
 			card = cards[index];
+
 			%>
 			<tr>
 

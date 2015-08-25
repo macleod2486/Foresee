@@ -7,18 +7,28 @@
 
 module.exports =
 {
-
 	list: function(req,res)
 	{
-		sails.models.gatherer.find({ nameOfCard : {'!': 'NULL'}}).exec(
-				
-					function(error, cards)
-					{
-						sails.log("Size "+cards.length);
-						res.view({cards: cards});
-					}
+		if(req.method == 'POST')
+		{
+			sails.log("Posted");
+			sails.log(req.param('search'));
+			sails.models.gatherer.find({nameOfCard:{'like' : '%'+req.param('search')+'%'}}).exec(
+					
+						function(error, cards)
+						{
+							sails.log("Size "+cards.length);
+							res.view({cards: cards});
+						}
 
-				);
+					);
+		}
+
+		else
+		{
+			sails.log("List");
+			res.view({cards: ''});
+		}
 	}
 
 };
