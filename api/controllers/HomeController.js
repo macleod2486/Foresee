@@ -11,11 +11,11 @@ module.exports =
 	{
 		if(req.method == 'POST')
 		{
-			sails.models.gatherer.find({nameOfCard:{'like' : '%'+req.param('search')+'%'}}).exec(
+			sails.models.gatherer.find({nameOfCard:{'like' : '%'+req.param('search')+'%'}, sort: 'nameOfCard asc'}).exec(
 					
 						function(error, cards)
 						{
-							sails.log("Size "+cards.length);
+							sails.log("Number found "+cards.length);
 							res.view({cards: cards});
 						}
 
