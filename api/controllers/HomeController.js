@@ -11,8 +11,6 @@ module.exports =
 	{
 		if(req.method == 'POST')
 		{
-			sails.log("Posted");
-			sails.log(req.param('search'));
 			sails.models.gatherer.find({nameOfCard:{'like' : '%'+req.param('search')+'%'}}).exec(
 					
 						function(error, cards)
@@ -26,7 +24,6 @@ module.exports =
 
 		else
 		{
-			sails.log("List");
 			res.view({cards: ''});
 		}
 	}
