@@ -11,6 +11,10 @@ var cheerio = require("cheerio");
 //Count of records
 var count = 0;
 
+var links = [];
+
+var index = 0;
+
 //Data harvester
 function getData(linkArray)
 {
@@ -18,14 +22,14 @@ function getData(linkArray)
 	var req;
 	var data;
 
-	var index;
-
 	sails.log("Gathering data");
 	
 	linkArray.forEach(
 
 		function(entry)
 		{
+			index++;
+
 			req = new XMLHttpRequest();
 			req.open('GET', encodeURI(entry), false);
 			req.send();
@@ -51,7 +55,7 @@ function getData(linkArray)
 
 						splitter = temp.split("$");
 						
-						Gatherer.create({nameOfCard:splitter[0] , lowPrice:parseFloat(splitter[1]) , mediumPrice:parseFloat(splitter[2]), highPrice:parseFloat(splitter[3]), set:entry.split("=")[1]}).exec(
+						Gatherer.create({nameOfCard:splitter[0] , lowPrice:parseFloat(splitter[1]) , mediumPrice:parseFloat(splitter[2]), highPrice:parseFloat(splitter[3]), set:index}).exec(
 
 								function callback(err, created)
 								{
@@ -76,6 +80,7 @@ function getData(linkArray)
 			}
 
 		}
+
 	     );
 }
 
@@ -83,46 +88,26 @@ module.exports = {
 
 	process: function(req, res)
 	{
-		var req = new XMLHttpRequest();
-		req.open('GET', 'http://magic.tcgplayer.com/magic_price_guides.asp', false); 
-	        req.send();
+		sails.models.sets.find().exec(
 
-		if(req.status == 200)
-		{
-			//Cleanses the text
-			var text = req.ResponseText;
-			text = req.responseText + ""; 
-			text.replace(/<&#91;^>&#93;*>/g, "");
-
-			//Array to keep all arrays
-			var links = [];
-
-			//Parses the html to get the links
-			var data = cheerio.load(text);
-			data('td.magicSetCol a').each(
-				function()
+				function(err,found)
 				{
-					if(data(this) != "")
+					for(var index = 0; index < found.length; index++)
 					{
-						links.push("http://magic.tcgplayer.com/db/price_guide.asp?setname="+data(this).text());
+						links.push("http://magic.tcgplayer.com/db/price_guide.asp?setname="+found[index]['name']);
 					}
+
+					getData(links);
+
+					sails.log("Finished");
+					sails.log("Processed "+count);
+
+					res.view({count: count});
 				}
-			);
 
-			//Gets all the rows
-			getData(links);
+				);	
+
 		
-			sails.log("Finished");
-		}
-
-		else
-		{
-			sails.log("Page not loaded");
-		}
-
-		sails.log("Processed "+count);
-
-		res.view({count: count});
 	}
 
 };

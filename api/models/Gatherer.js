@@ -10,11 +10,6 @@ module.exports = {
 
   attributes: {
 
-	name:
-	{
-		type:'string'
-	},
-	
 	nameOfCard:
 	{
 		type:'string'
@@ -37,9 +32,9 @@ module.exports = {
 
 	set:
 	{
-		type:'string'
+		collection: 'Sets',
+		via: 'card'
 	}
-
   }
 };
 
