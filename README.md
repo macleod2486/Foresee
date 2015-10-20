@@ -12,9 +12,18 @@ http://localhost:8080/insert?cardName=tester1&setName=tester2&highPrice=tester3&
 --
 
 
+Example of getting parameters
+
+--
+
+http://localhost:8080/getList?setName=Zendikar
+
+--
+
+The getting will return a glob of json that can be parsed.
+
 Dependencies:
 
 
 * Mongo 3.1.x
 * Sails 11.1
-

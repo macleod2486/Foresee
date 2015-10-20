@@ -40,6 +40,11 @@ module.exports.routes = {
   '/insert': {
 	  controller: 'GathererController',
 	  action: 'insert',
+  },
+
+  '/getList': {
+	  controller: 'GathererController',
+	  action: 'getList',
   }
 
   /***************************************************************************

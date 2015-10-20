@@ -23,16 +23,42 @@ module.exports = {
 						if(error)
 						{
 							sails.log(error);
-							res.send("Error");
+							res.send(error);
 						}
 						
 						else
 						{
-							res.send(error);
+							res.send("Completed");
 						}
 					}
 
 					);
 		}	
+	},
+	
+	getList:function(req, res)
+	{
+		var setName = req.param("setName");
+
+		if(setName)
+		{
+			sails.models.gatherer.find({set: setName}).exec(
+
+					function(error, result)
+					{
+						if(error)
+						{
+							sails.log(error);
+							res.send(error);
+						}
+
+						else
+						{
+							res.send(result);
+						}
+					}
+
+					);
+		}
 	}
 };
