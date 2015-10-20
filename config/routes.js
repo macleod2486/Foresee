@@ -37,9 +37,9 @@ module.exports.routes = {
     action: 'list'
   },
 
-  '/Gatherer': {
+  '/insert': {
 	  controller: 'GathererController',
-	  action: 'process',
+	  action: 'insert',
   }
 
   /***************************************************************************

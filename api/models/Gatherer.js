@@ -17,23 +17,22 @@ module.exports = {
 
 	lowPrice:
 	{
-		type:'float'
+		type:'string'
 	},
 
 	mediumPrice:
 	{
-		type:'float'
+		type:'string'
 	},
 
 	highPrice:
 	{
-		type:'float'
+		type:'string'
 	},
 
 	set:
 	{
-		collection: 'Sets',
-		via: 'card'
+		type:'string'	
 	}
   }
 };
