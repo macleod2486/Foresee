@@ -45,6 +45,11 @@ module.exports.routes = {
   '/getList': {
 	  controller: 'GathererController',
 	  action: 'getList',
+  },
+
+  '/insertAverage':{
+	  controller: 'GathererController',
+	  action: 'insertAverage',
   }
 
   /***************************************************************************

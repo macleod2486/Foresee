@@ -27,6 +27,26 @@ module.exports = {
 	  highPrice:
 	  {
 		  type: 'string'
+	  },
+
+	  averageLowPrice:
+	  {
+		  type: 'string'
+	  },
+
+	  averageMediumPrice:
+	  {
+		  type: 'string'
+	  },
+
+	  averageHighPrice:
+	  {
+		  type: 'string'
+	  },
+
+	  sets:
+	  {
+		  type: 'string'
 	  }
   }
 };
