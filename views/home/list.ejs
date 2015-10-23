@@ -15,6 +15,10 @@
 		</th>
 
 		<th>
+			Set
+		</th>
+
+		<th>
 			Low
 		</th>
 
@@ -27,7 +31,15 @@
 		</th>
 
 		<th>
-			Set
+			AverageLow
+		</th>
+
+		<th>
+			AverageMedium
+		</th>
+
+		<th>
+			AverageHigh
 		</th>
 
 		<%
@@ -47,6 +59,10 @@
 				</td>
 
 				<td>
+					<%=card['sets']%>
+				</td>
+
+				<td>
 					<%=card['lowPrice']%>
 				</td>
 
@@ -59,9 +75,16 @@
 				</td>
 
 				<td>
-					<%=card['set']%>
+					<%=card['averageLowPrice']%>
 				</td>
 
+				<td>
+					<%=card['averageMediumPrice']%>
+				</td>
+
+				<td>
+					<%=card['averageHighPrice']%>
+				</td>
 			</tr>
 		<% } %>
 

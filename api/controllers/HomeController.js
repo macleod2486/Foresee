@@ -11,7 +11,13 @@ module.exports =
 	{
 		if(req.method == 'POST')
 		{
-			sails.models.average.find({nameOfCard:{'like' : '%'+req.param('search')+'%'}, sort: 'nameOfCard asc'},' distinct').exec(
+			sails.models.average.find(
+					{
+						nameOfCard:{'like' : '%'+req.param('search')+'%'},
+						sort: 'nameOfCard asc'
+					},
+
+					'distinct').exec(
 					
 					function(error, cards)
 					{
@@ -27,6 +33,5 @@ module.exports =
 			res.view({cards: ''});
 		}
 	}
-
 };
 
