@@ -47,6 +47,11 @@ module.exports = {
 	  sets:
 	  {
 		  type: 'string'
+	  },
+
+	  source:
+	  {
+		  type: 'string'
 	  }
   }
 };

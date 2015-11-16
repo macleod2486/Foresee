@@ -33,6 +33,11 @@ module.exports = {
 	set:
 	{
 		type:'string'	
+	},
+
+	source:
+	{
+		type:'string'
 	}
   }
 };

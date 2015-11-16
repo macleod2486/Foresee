@@ -14,10 +14,11 @@ module.exports = {
 		var highPrice = req.param("highPrice");
 		var mediumPrice = req.param("mediumPrice");
 		var lowPrice = req.param("lowPrice");
+		var source = req.param("source");
 
-		if(cardName && setName && highPrice && mediumPrice && lowPrice)
+		if(cardName && setName && highPrice && mediumPrice && lowPrice && source)
 		{
-			sails.models.gatherer.create({nameOfCard: cardName, highPrice: highPrice, mediumPrice: mediumPrice, lowPrice: lowPrice, set: setName}).exec(
+			sails.models.gatherer.create({nameOfCard: cardName, highPrice: highPrice, mediumPrice: mediumPrice, lowPrice: lowPrice, set: setName, source: source}).exec(
 					function(error)
 					{
 						if(error)
@@ -33,7 +34,12 @@ module.exports = {
 					}
 
 					);
-		}	
+		}
+
+		else
+		{
+			res.send("Invalid");
+		}
 	},
 	
 	getList: function(req, res)
@@ -60,6 +66,11 @@ module.exports = {
 
 					);
 		}
+
+		else
+		{
+			res.send("Error in parameter");
+		}
 	},
 
 	insertAverage:function(req, res)
@@ -75,8 +86,10 @@ module.exports = {
 		var averageMedPrice = req.param("averageMedPrice");
 		var averageLowPrice = req.param("averageLowPrice");
 
+		var source = req.param("source");
+
 		if(cardName && setName && highPrice && mediumPrice &&
-				lowPrice && averageHighPrice && averageMedPrice && averageLowPrice)
+				lowPrice && averageHighPrice && averageMedPrice && averageLowPrice && source)
 		{
 			//Needs to be cleaned up but will work in the meantime.
 			sails.models.average.update(
@@ -90,7 +103,8 @@ module.exports = {
 						highPrice: highPrice,
 						averageLowPrice: averageLowPrice,
 						averageMediumPrice: averageMedPrice,
-						averageHighPrice: averageHighPrice
+						averageHighPrice: averageHighPrice,
+						source: source
 					}).exec(
 					function(error, records)
 					{
@@ -118,7 +132,8 @@ module.exports = {
 								highPrice: highPrice,
 								averageLowPrice: averageLowPrice,
 								averageMediumPrice: averageMedPrice,
-								averageHighPrice: averageHighPrice
+								averageHighPrice: averageHighPrice,
+								source: source
 							}
 							).exec(
 								function(error, records)
@@ -140,6 +155,11 @@ module.exports = {
 					}
 
 					);
+		}
+
+		else
+		{
+			res.send("Error in parameters");
 		}
 
 	}
