@@ -7,7 +7,7 @@ Example of inserting parameters
 
 --
 
-http://localhost:8080/insert?cardName=tester1&setName=tester2&highPrice=tester3&mediumPrice=tester4&lowPrice=tester5
+http://localhost:8080/insert?cardName=tester1&setName=tester2&highPrice=tester3&mediumPrice=tester4&lowPrice=tester5&source=Starcity
 
 --
 
