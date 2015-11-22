@@ -44,11 +44,11 @@ module.exports = {
 	
 	getList: function(req, res)
 	{
-		var setName = req.param("setName");
+		var source = req.param("source");
 
-		if(setName)
+		if(source)
 		{
-			sails.models.gatherer.find({set: setName}).exec(
+			sails.models.gatherer.find({source: source}).exec(
 
 					function(error, result)
 					{
