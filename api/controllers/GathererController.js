@@ -41,14 +41,41 @@ module.exports = {
 			res.send("Invalid");
 		}
 	},
-	
-	getList: function(req, res)
+
+	getListCount: function(req,res)
 	{
 		var source = req.param("source");
 
 		if(source)
 		{
-			sails.models.gatherer.find({source: source}).exec(
+			sails.models.gatherer.count({source: source}).exec(
+					function(error, found)
+					{
+						if(error)
+						{
+							res.send("Error in call");
+						}
+						else
+						{
+							res.send({count: found});
+						}
+					}
+					);
+		}
+		else
+		{
+			res.send("Error in parameter");
+		}
+	},
+	
+	getList: function(req, res)
+	{
+		var source = req.param("source");
+		var page = req.param("page");
+
+		if(source && page)
+		{
+			sails.models.gatherer.find({source: source}).paginate({page: page, limit: 100}).exec(
 
 					function(error, result)
 					{
