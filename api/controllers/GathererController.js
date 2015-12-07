@@ -24,12 +24,12 @@ module.exports = {
 						if(error)
 						{
 							sails.log(error);
-							res.send(error);
+							res.serverError(error);
 						}
 						
 						else
 						{
-							res.send("Completed");
+							res.ok("Completed");
 						}
 					}
 
@@ -38,7 +38,7 @@ module.exports = {
 
 		else
 		{
-			res.send("Invalid");
+			res.ok("Invalid");
 		}
 	},
 
@@ -53,18 +53,18 @@ module.exports = {
 					{
 						if(error)
 						{
-							res.send("Error in call");
+							res.serverError("Error in call");
 						}
 						else
 						{
-							res.send({count: found});
+							res.ok({count: found});
 						}
 					}
 					);
 		}
 		else
 		{
-			res.send("Error in parameter");
+			res.ok("Error in parameter");
 		}
 	},
 	
@@ -82,12 +82,12 @@ module.exports = {
 						if(error)
 						{
 							sails.log(error);
-							res.send(error);
+							res.serverError(error);
 						}
 
 						else
 						{
-							res.send(result);
+							res.ok(result);
 						}
 					}
 
@@ -96,11 +96,11 @@ module.exports = {
 
 		else
 		{
-			res.send("Error in parameter");
+			res.serverError("Error in parameter");
 		}
 	},
 
-	insertAverage:function(req, res)
+	insertAverage: function(req, res)
 	{
 		var cardName = req.param("cardName");
 		var setName = req.param("setName");
@@ -137,14 +137,14 @@ module.exports = {
 					{
 						if(error)
 						{
-							res.send(error);
+							res.serverError(error);
 							sails.log(error);
 							return;
 						}
 
 						if(records.length > 0)
 						{
-							res.send("Records updated");
+							res.ok("Records updated");
 						}
 
 						else
@@ -168,12 +168,12 @@ module.exports = {
 									if(error)
 									{
 										sails.log(error);
-										res.send(error);
+										res.serverError(error);
 									}
 
 									else
 									{
-										res.send("Record inserted");
+										res.ok("Record inserted");
 									}
 								}
 
@@ -186,8 +186,34 @@ module.exports = {
 
 		else
 		{
-			res.send("Error in parameters");
+			res.serverError("Error in parameters");
 		}
 
+	},
+
+	deleteOld: function(req, res)
+	{
+		var date = new Date();
+		date.setHours(0);
+		date.setMinutes(0);
+		date.setSeconds(0);
+
+		sails.log("Deleting older than this date "+date);
+
+		sails.models.gatherer.destroy({createdAt: {'<': date}}).exec(
+				function(error)
+				{
+					if(error)
+					{
+						sails.log(error);
+						res.serverError(error);
+					}
+
+					else
+					{
+						res.ok("Cleared out old");
+					}
+				}
+		);
 	}
 };
