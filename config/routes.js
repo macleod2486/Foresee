@@ -60,6 +60,21 @@ module.exports.routes = {
   '/delete':{
 	  controller: 'GathererController',
 	  action: 'deleteOld'
+  },
+
+  '/averageRecordSearch':{
+	  controller: 'GathererController',
+	  action: 'averageRecordSearch'
+  },
+
+  '/insertAverage':{
+	  controller: 'GathererController',
+	  action: 'insertAverage'
+  },
+
+  '/updateAverage':{
+	  controller: 'GathererController',
+	  action: 'updateAverage'
   }
 
   /***************************************************************************

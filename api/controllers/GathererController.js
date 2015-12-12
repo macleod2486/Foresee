@@ -19,21 +19,21 @@ module.exports = {
 		if(cardName && setName && highPrice && mediumPrice && lowPrice && source)
 		{
 			sails.models.gatherer.create({nameOfCard: cardName, highPrice: highPrice, mediumPrice: mediumPrice, lowPrice: lowPrice, set: setName, source: source}).exec(
-					function(error)
+				function(error)
+				{
+					if(error)
 					{
-						if(error)
-						{
-							sails.log(error);
-							res.serverError(error);
-						}
-						
-						else
-						{
-							res.ok("Completed");
-						}
+						sails.log(error);
+						res.serverError(error);
 					}
+					
+					else
+					{
+						res.ok("Completed");
+					}
+				}
 
-					);
+			);
 		}
 
 		else
@@ -49,18 +49,18 @@ module.exports = {
 		if(source)
 		{
 			sails.models.gatherer.count({source: source}).exec(
-					function(error, found)
+				function(error, found)
+				{
+					if(error)
 					{
-						if(error)
-						{
-							res.serverError("Error in call");
-						}
-						else
-						{
-							res.ok({count: found});
-						}
+						res.serverError("Error in call");
 					}
-					);
+					else
+					{
+						res.ok({count: found});
+					}
+				}
+			);
 		}
 		else
 		{
@@ -77,27 +77,106 @@ module.exports = {
 		{
 			sails.models.gatherer.find({source: source}).paginate({page: page, limit: 100}).exec(
 
-					function(error, result)
+				function(error, result)
+				{
+					if(error)
 					{
-						if(error)
-						{
-							sails.log(error);
-							res.serverError(error);
-						}
-
-						else
-						{
-							res.ok(result);
-						}
+						sails.log(error);
+						res.serverError(error);
 					}
 
-					);
+					else
+					{
+						res.ok(result);
+					}
+				}
+
+		        );
 		}
 
 		else
 		{
 			res.serverError("Error in parameter");
 		}
+	},
+
+	averageRecordSearch: function(req, res)
+	{
+		var card = req.param("cardName");
+		var setName = req.param("setName");
+		var source = req.param("source");
+
+		if(card && setName && source)
+		{
+			sails.models.average.find({nameOfCard: card, sets: setName, source: source}).exec(
+
+				function(error, result)
+				{
+					if(error)
+					{
+						res.serverError(error);
+					}
+
+					else
+					{
+						res.ok(result);
+					}
+				}
+
+			);
+		}
+
+		else
+		{
+			res.serverError("Missing parameter");
+		}
+	
+	},
+
+	updateAverage: function(req, res)
+	{
+		var cardName = req.param("cardName");
+		var setName = req.param("setName");
+
+		var highPrice = req.param("highPrice");
+		var mediumPrice = req.param("mediumPrice");
+		var lowPrice = req.param("lowPrice");
+
+		var averageHighPrice = req.param("averageHighPrice");
+		var averageMedPrice = req.param("averageMedPrice");
+		var averageLowPrice = req.param("averageLowPrice");
+
+		var source = req.param("source");
+
+		sails.models.average.update(
+		{
+			nameOfCard: cardName, 
+			sets:setName,
+			source: source
+		},
+		{
+			lowPrice: lowPrice,
+			mediumPrice: mediumPrice,
+			highPrice: highPrice,
+			averageLowPrice: averageLowPrice,
+			averageMediumPrice: averageMedPrice,
+			averageHighPrice: averageHighPrice,
+		}
+		).exec(
+			function(error, records)
+			{
+				if(error)
+				{
+					sails.log(error);
+					res.serverError(error);
+				}
+
+				else
+				{
+					res.ok("Record updated");
+				}
+			}
+		);
 	},
 
 	insertAverage: function(req, res)
@@ -118,70 +197,30 @@ module.exports = {
 		if(cardName && setName && highPrice && mediumPrice &&
 				lowPrice && averageHighPrice && averageMedPrice && averageLowPrice && source)
 		{
-			//Needs to be cleaned up but will work in the meantime.
-			sails.models.average.update(
+			sails.models.average.create(
+				{
+					lowPrice: lowPrice,
+					mediumPrice: mediumPrice,
+					highPrice: highPrice,
+					averageLowPrice: averageLowPrice,
+					averageMediumPrice: averageMedPrice,
+					averageHighPrice: averageHighPrice,
+					source: source
+				}).exec(
+				function(error, records)
+				{
+					if(error)
 					{
-						nameOfCard: cardName, 
-						sets:setName
-					},
-					{
-						lowPrice: lowPrice,
-						mediumPrice: mediumPrice,
-						highPrice: highPrice,
-						averageLowPrice: averageLowPrice,
-						averageMediumPrice: averageMedPrice,
-						averageHighPrice: averageHighPrice,
-						source: source
-					}).exec(
-					function(error, records)
-					{
-						if(error)
-						{
-							res.serverError(error);
-							sails.log(error);
-							return;
-						}
-
-						if(records.length > 0)
-						{
-							res.ok("Records updated");
-						}
-
-						else
-						{
-							//If no record is found, create it.
-							sails.models.average.create(
-							{
-								nameOfCard: cardName,
-								sets: setName,
-								lowPrice: lowPrice,
-								mediumPrice: mediumPrice,
-								highPrice: highPrice,
-								averageLowPrice: averageLowPrice,
-								averageMediumPrice: averageMedPrice,
-								averageHighPrice: averageHighPrice,
-								source: source
-							}
-							).exec(
-								function(error, records)
-								{
-									if(error)
-									{
-										sails.log(error);
-										res.serverError(error);
-									}
-
-									else
-									{
-										res.ok("Record inserted");
-									}
-								}
-
-							);
-						}
+						res.serverError(error);
+						sails.log(error);
+						return;
 					}
-
-					);
+					else
+					{
+						res.ok("Record created");
+					}
+				}
+			);
 		}
 
 		else
@@ -201,19 +240,19 @@ module.exports = {
 		sails.log("Deleting older than this date "+date);
 
 		sails.models.gatherer.destroy({createdAt: {'<': date}}).exec(
-				function(error)
+			function(error)
+			{
+				if(error)
 				{
-					if(error)
-					{
-						sails.log(error);
-						res.serverError(error);
-					}
-
-					else
-					{
-						res.ok("Cleared out old");
-					}
+					sails.log(error);
+					res.serverError(error);
 				}
+
+				else
+				{
+					res.ok("Cleared out old");
+				}
+			}
 		);
 	}
 };
