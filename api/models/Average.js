@@ -44,7 +44,7 @@ module.exports = {
 		  type: 'string'
 	  },
 
-	  sets:
+	  set:
 	  {
 		  type: 'string'
 	  },

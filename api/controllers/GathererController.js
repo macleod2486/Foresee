@@ -108,7 +108,7 @@ module.exports = {
 
 		if(card && setName && source)
 		{
-			sails.models.average.find({nameOfCard: card, sets: setName, source: source}).exec(
+			sails.models.average.find({nameOfCard: card, set: setName, source: source}).exec(
 
 				function(error, result)
 				{
@@ -199,13 +199,15 @@ module.exports = {
 		{
 			sails.models.average.create(
 				{
+					nameOfCard: cardName,
 					lowPrice: lowPrice,
 					mediumPrice: mediumPrice,
 					highPrice: highPrice,
 					averageLowPrice: averageLowPrice,
 					averageMediumPrice: averageMedPrice,
 					averageHighPrice: averageHighPrice,
-					source: source
+					source: source,
+					set: setName
 				}).exec(
 				function(error, records)
 				{
