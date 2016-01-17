@@ -69,7 +69,7 @@ module.exports.connections = {
 	  adapter:'sails-redis',
 	  config:
 	  {
-		host: 'localhost',
+		host: 'redis.gonzales.com',
 		port: 6397
 	  }
   }
