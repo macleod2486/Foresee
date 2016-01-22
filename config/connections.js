@@ -62,16 +62,14 @@ module.exports.connections = {
     port: 27017,
    // user: 'test',
    // password: 'test',
-    database: 'Foresee'
+   // database: 'Foresee'
   },
 
   redis: {
 	  adapter:'sails-redis',
-	  config:
-	  {
-		host: 'redis.gonzales.com',
-		port: 6397
-	  }
+	  host:'redis.gonzales.com',
+	  port:6379,
+	  //database:'Foresee'
   }
 
   /***************************************************************************
