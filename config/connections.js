@@ -67,7 +67,7 @@ module.exports.connections = {
 
   redis: {
 	  adapter:'sails-redis',
-	  host:'redis.gonzales.com',
+	  host:'localhost',
 	  port:6379,
 	  //database:'Foresee'
   }

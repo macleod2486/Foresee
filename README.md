@@ -57,6 +57,9 @@ http://urlofyourinstallation:1337/insertAverage?cardName=nameofcard&setName=name
 
 ----
 
+Licensed under the GPL3
+##
+
 Dependencies:
 
 
