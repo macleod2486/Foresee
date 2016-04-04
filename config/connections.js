@@ -70,7 +70,7 @@ module.exports.connections = {
 	  host:'localhost',
 	  port:6379,
 	  //database:'Foresee'
-  }
+  },
 
   /***************************************************************************
   *                                                                          *
@@ -81,14 +81,16 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
- /* somePostgresqlServer: {
+  postgresql: {
     adapter: 'sails-postgresql',
-    host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
-    user: 'YOUR_POSTGRES_USER',
-    password: 'YOUR_POSTGRES_PASSWORD',
-    database: 'YOUR_POSTGRES_DB'
+    host: 'redis.gonzales.com',
+    user: 'postgres',
+    password: 'postgres',
+    database: 'sails',
+    ssl: false,
+    schema: true
   }
-*/
+
 
   /***************************************************************************
   *                                                                          *
