@@ -224,9 +224,9 @@ module.exports = {
 				{
 					if(error)
 					{
-						res.serverError(error);
+
 						sails.log(error);
-						return;
+						res.serverError(error);
 					}
 					else
 					{
