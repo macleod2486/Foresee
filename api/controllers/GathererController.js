@@ -118,7 +118,7 @@ module.exports = {
 		//
 
 		var source = req.param("source");
-		var query = "select distinct \"nameOfCard\" from gatherer where source = 'MTGPrice'";
+		var query = "select distinct \"nameOfCard\" from gatherer where source = '"+source+"'";
 		if(source)
 		{
 			sails.models.gatherer.query(query,
