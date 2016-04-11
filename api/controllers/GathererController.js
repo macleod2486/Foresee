@@ -111,6 +111,31 @@ module.exports = {
 		}
 	},
 
+	getDistinctList: function(req, res)
+	{
+		//
+		//Currently this function only works with postgres, will have to customize until a better way to handle is introduced.
+		//
+
+		var source = req.param("source");
+		var query = "select distinct \"nameOfCard\" from gatherer where source = 'MTGPrice'";
+		if(source)
+		{
+			sails.models.gatherer.query(query,
+					function(error, results)
+					{
+						if(error)
+						{
+							res.serverError(error);
+						}
+						else
+						{
+							res.ok(results.rows);
+						}
+					});
+		}
+	},
+
 	averageRecordSearch: function(req, res)
 	{
 		var card = req.param("cardName");
@@ -119,7 +144,7 @@ module.exports = {
 
 		if(card && setName && source)
 		{
-			sails.models.average.find({nameOfCard: card, set: setName, source: source}).exec(
+			sails.models.average.findOne({nameOfCard: card, set: setName, source: source}).exec(
 
 				function(error, result)
 				{
@@ -141,7 +166,6 @@ module.exports = {
 		{
 			res.serverError("Missing parameter");
 		}
-	
 	},
 
 	updateAverage: function(req, res)

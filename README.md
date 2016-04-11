@@ -20,6 +20,16 @@ http://urlofthisinstallation:1337/getList?setName=Zendikar
 
 The getting will return a glob of json that can be parsed.
 
+--
+
+````
+http://urlofthisinstallation:1337/getDistinctList?source=TCGPlayer
+````
+
+--
+
+This will return distinct card names (Currently only supporting postgresql)
+
 ----
 
 Deletes old records that are older than a day.
