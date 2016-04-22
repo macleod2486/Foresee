@@ -52,10 +52,6 @@ module.exports.routes = {
 	  action: 'getDistinctList',
   },
 
-  '/getListCount':{
-	  controller: 'GathererController',
-	  action: 'getListCount'
-  },
 
   '/insertAverage':{
 	  controller: 'GathererController',

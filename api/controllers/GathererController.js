@@ -53,40 +53,15 @@ module.exports = {
 		}
 	},
 
-	getListCount: function(req,res)
-	{
-		var source = req.param("source");
-
-		if(source)
-		{
-			sails.models.gatherer.count({source: source}).exec(
-				function(error, found)
-				{
-					if(error)
-					{
-						res.serverError("Error in call");
-					}
-					else
-					{
-						res.ok({count: found});
-					}
-				}
-			);
-		}
-		else
-		{
-			res.ok("Error in parameter");
-		}
-	},
-	
 	getList: function(req, res)
 	{
 		var source = req.param("source");
-		var page = req.param("page");
+		var nameOfCard = req.param("nameOfCard");
+		var set = req.param("set");
 
-		if(source && page)
+		if(nameOfCard && source && set)
 		{
-			sails.models.gatherer.find({source: source}).paginate({page: page, limit: 100}).exec(
+			sails.models.gatherer.find({source: source, nameOfCard: nameOfCard, set: set}).exec(
 
 				function(error, result)
 				{
@@ -118,7 +93,7 @@ module.exports = {
 		//
 
 		var source = req.param("source");
-		var query = "select distinct \"nameOfCard\" from gatherer where source = '"+source+"'";
+		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '"+source+"'";
 		if(source)
 		{
 			sails.models.gatherer.query(query,
