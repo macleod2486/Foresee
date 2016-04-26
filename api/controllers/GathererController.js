@@ -161,7 +161,7 @@ module.exports = {
 		sails.models.average.update(
 		{
 			nameOfCard: cardName, 
-			sets:setName,
+			set:setName,
 			source: source
 		},
 		{
