@@ -61,7 +61,7 @@ module.exports = {
 
 		if(nameOfCard && source && set)
 		{
-			sails.models.gatherer.find({source: source, nameOfCard: nameOfCard, set: set}).exec(
+			sails.models.gatherer.find({source: source, nameOfCard: nameOfCard, set: set} ).sort('createdAt DESC').exec(
 
 				function(error, result)
 				{
