@@ -26,9 +26,8 @@ module.exports =
 					{
 						nameOfCard:{'like' : '%'+req.param('search')+'%'},
 						sort: 'nameOfCard asc'
-					},
-
-					'distinct').exec(
+					}
+					).exec(
 					
 					function(error, cards)
 					{
