@@ -47,6 +47,11 @@ module.exports.routes = {
 	  action: 'getList',
   },
 
+  '/getListCount': {
+	  controller: 'GathererController',
+	  action: 'getListCount'
+  },
+
   '/getDistinctList': {
 	  controller: 'GathererController',
 	  action: 'getDistinctList',

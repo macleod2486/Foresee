@@ -58,10 +58,12 @@ module.exports = {
 		var source = req.param("source");
 		var nameOfCard = req.param("nameOfCard");
 		var set = req.param("set");
+		var page = req.param("page");
+		var limit = req.param("limit");
 
-		if(nameOfCard && source && set)
+		if(nameOfCard && source && set & page & limit)
 		{
-			sails.models.gatherer.find({source: source, nameOfCard: nameOfCard, set: set} ).sort('createdAt DESC').exec(
+			sails.models.gatherer.find({source: source, nameOfCard: nameOfCard, set: set} ).sort('createdAt DESC').paginate({page: page, limit: limit}).exec(
 
 				function(error, result)
 				{
@@ -86,6 +88,40 @@ module.exports = {
 		}
 	},
 
+	getListCount: function(req, res)
+	{
+		var source = req.param("source");
+		var nameOfCard = req.param("nameOfCard");
+		var set = req.param("set");
+
+		if(nameOfCard && source && set)
+		{
+			sails.models.gatherer.count({source: source, nameOfCard: nameOfCard, set: set}).exec(
+
+				function(error, result)
+				{
+					if(error)
+					{
+						sails.log(error);
+						res.serverError(error);
+					}
+
+					else
+					{
+						res.ok({count: result});
+					}
+				}
+
+		        );
+		}
+
+		else
+		{
+			res.serverError("Error in parameter");
+		}
+
+	},
+
 	getDistinctList: function(req, res)
 	{
 		//
@@ -96,7 +132,7 @@ module.exports = {
 		var page = req.param("page") * limit;
 		var source = req.param("source");
 		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '"+source+"' limit 10 offset 10";
-		if(source)
+		if(source & limit & page)
 		{
 			sails.models.gatherer.query(query,
 					function(error, results)
@@ -110,6 +146,10 @@ module.exports = {
 							res.ok(results.rows);
 						}
 					});
+		}
+		else
+		{
+			res.serverError("Missing parameter");
 		}
 	},
 
@@ -132,6 +172,11 @@ module.exports = {
 							res.ok({count: results.rows.length});
 						}
 					});
+		}
+
+		else
+		{
+			res.serverError("Missing parameter");
 		}
 	},
 
