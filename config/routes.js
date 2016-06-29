@@ -76,6 +76,11 @@ module.exports.routes = {
   '/updateAverage':{
 	  controller: 'GathererController',
 	  action: 'updateAverage'
+  },
+
+  '/getDistinctListCount': {
+	  controller: 'GathererController',
+	  action: 'getDistinctListCount'
   }
 
   /***************************************************************************

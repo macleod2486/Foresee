@@ -92,8 +92,10 @@ module.exports = {
 		//Currently this function only works with postgres, will have to customize until a better way to handle is introduced.
 		//
 
+		var limit = req.param("limit");
+		var page = req.param("page") * limit;
 		var source = req.param("source");
-		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '"+source+"'";
+		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '"+source+"' limit 10 offset 10";
 		if(source)
 		{
 			sails.models.gatherer.query(query,
@@ -106,6 +108,28 @@ module.exports = {
 						else
 						{
 							res.ok(results.rows);
+						}
+					});
+		}
+	},
+
+	getDistinctListCount: function(req, res)
+	{
+		var source = req.param("source");
+		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '"+source+"'";
+
+		if(source)
+		{
+			sails.models.gatherer.query(query,
+					function(error, results)
+					{
+						if(error)
+						{
+							res.serverError(error);
+						}
+						else
+						{
+							res.ok({count: results.rows.length});
 						}
 					});
 		}
@@ -245,6 +269,7 @@ module.exports = {
 	deleteOld: function(req, res)
 	{
 		var date = new Date();
+		date.setDate(date.getDate()-7);
 		date.setHours(0);
 		date.setMinutes(0);
 		date.setSeconds(0);
