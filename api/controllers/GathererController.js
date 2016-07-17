@@ -61,7 +61,7 @@ module.exports = {
 		var page = req.param("page");
 		var limit = req.param("limit");
 
-		if(nameOfCard && source && set & page & limit)
+		if(nameOfCard && source && set && page != null && limit)
 		{
 			sails.models.gatherer.find({source: source, nameOfCard: nameOfCard, set: set} ).sort('createdAt DESC').paginate({page: page, limit: limit}).exec(
 
@@ -131,8 +131,9 @@ module.exports = {
 		var limit = req.param("limit");
 		var page = req.param("page") * limit;
 		var source = req.param("source");
-		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '"+source+"' limit 10 offset 10";
-		if(source & limit & page)
+		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '" + source + "' limit "+ limit + " offset "+page;
+
+		if(limit && page != null && source)
 		{
 			sails.models.gatherer.query(query,
 					function(error, results)
