@@ -313,28 +313,38 @@ module.exports = {
 
 	deleteOld: function(req, res)
 	{
-		var date = new Date();
-		date.setDate(date.getDate()-7);
-		date.setHours(0);
-		date.setMinutes(0);
-		date.setSeconds(0);
+                var daysAgo = req.param("days");
+                
+                if(daysAgo)
+                {
+                    var date = new Date();
+                    date.setDate(date.getDate()-daysAgo);
+                    date.setHours(0);
+                    date.setMinutes(0);
+                    date.setSeconds(0);
 
-		sails.log("Deleting older than this date "+date);
+                    sails.log("Deleting older than this date "+date);
 
-		sails.models.gatherer.destroy({createdAt: {'<': date}}).exec(
-			function(error)
-			{
-				if(error)
-				{
-					sails.log(error);
-					res.serverError(error);
-				}
+                    sails.models.gatherer.destroy({createdAt: {'<': date}}).exec(
+                            function(error)
+                            {
+                                    if(error)
+                                    {
+                                            sails.log(error);
+                                            res.serverError(error);
+                                    }
 
-				else
-				{
-					res.ok("Cleared out old");
-				}
-			}
-		);
+                                    else
+                                    {
+                                            res.ok("Cleared out old");
+                                    }
+                            }
+                    );
+
+                }
+		else
+		{
+			res.serverError("Error in parameters");
+		}
 	}
 };
