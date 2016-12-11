@@ -25,36 +25,16 @@ module.exports = {
 		  type: 'string'
 	  },
 
-	  lowPrice:
+	  price:
 	  {
 		  type: 'string'
 	  },
 
-	  mediumPrice:
+	  average:
 	  {
 		  type: 'string'
 	  },
-
-	  highPrice:
-	  {
-		  type: 'string'
-	  },
-
-	  averageLowPrice:
-	  {
-		  type: 'string'
-	  },
-
-	  averageMediumPrice:
-	  {
-		  type: 'string'
-	  },
-
-	  averageHighPrice:
-	  {
-		  type: 'string'
-	  },
-
+	 
 	  set:
 	  {
 		  type: 'string'

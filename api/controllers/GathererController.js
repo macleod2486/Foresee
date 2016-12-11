@@ -22,14 +22,12 @@ module.exports = {
 	{
 		var cardName = req.param("cardName");
 		var setName = req.param("setName");
-		var highPrice = req.param("highPrice");
-		var mediumPrice = req.param("mediumPrice");
-		var lowPrice = req.param("lowPrice");
+		var price = req.param("price");
 		var source = req.param("source");
 
-		if(cardName && setName && highPrice && mediumPrice && lowPrice && source)
+		if(cardName && setName && price && source)
 		{
-			sails.models.gatherer.create({nameOfCard: cardName, highPrice: highPrice, mediumPrice: mediumPrice, lowPrice: lowPrice, set: setName, source: source}).exec(
+			sails.models.gatherer.create({nameOfCard: cardName, price: price, set: setName, source: source}).exec(
 				function(error)
 				{
 					if(error)
@@ -131,7 +129,7 @@ module.exports = {
 		var limit = req.param("limit");
 		var page = req.param("page") * limit;
 		var source = req.param("source");
-		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '" + source + "' limit "+ limit + " offset "+page;
+		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, price from gatherer where source = '" + source + "' limit "+ limit + " offset "+page;
 
 		if(limit && page != null && source)
 		{
@@ -157,7 +155,7 @@ module.exports = {
 	getDistinctListCount: function(req, res)
 	{
 		var source = req.param("source");
-		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, \"lowPrice\", \"mediumPrice\", \"highPrice\" from gatherer where source = '"+source+"'";
+		var query = "select distinct on(\"nameOfCard\", \"set\") \"nameOfCard\", set, source, price from gatherer where source = '"+source+"'";
 
 		if(source)
 		{
@@ -217,15 +215,8 @@ module.exports = {
 	{
 		var cardName = req.param("cardName");
 		var setName = req.param("setName");
-
-		var highPrice = req.param("highPrice");
-		var mediumPrice = req.param("mediumPrice");
-		var lowPrice = req.param("lowPrice");
-
-		var averageHighPrice = req.param("averageHighPrice");
-		var averageMedPrice = req.param("averageMedPrice");
-		var averageLowPrice = req.param("averageLowPrice");
-
+		var price = req.param("price");
+		var average = req.param("average");
 		var source = req.param("source");
 
 		sails.models.average.update(
@@ -235,12 +226,8 @@ module.exports = {
 			source: source
 		},
 		{
-			lowPrice: lowPrice,
-			mediumPrice: mediumPrice,
-			highPrice: highPrice,
-			averageLowPrice: averageLowPrice,
-			averageMediumPrice: averageMedPrice,
-			averageHighPrice: averageHighPrice,
+			price: price,
+			average: average,
 		}
 		).exec(
 			function(error, records)
@@ -263,29 +250,17 @@ module.exports = {
 	{
 		var cardName = req.param("cardName");
 		var setName = req.param("setName");
-
-		var highPrice = req.param("highPrice");
-		var mediumPrice = req.param("mediumPrice");
-		var lowPrice = req.param("lowPrice");
-
-		var averageHighPrice = req.param("averageHighPrice");
-		var averageMedPrice = req.param("averageMedPrice");
-		var averageLowPrice = req.param("averageLowPrice");
-
+		var price = req.param("price");
+		var average = req.param("average");
 		var source = req.param("source");
 
-		if(cardName && setName && highPrice && mediumPrice &&
-				lowPrice && averageHighPrice && averageMedPrice && averageLowPrice && source)
+		if(cardName && setName && price && average && source)
 		{
 			sails.models.average.create(
 				{
 					nameOfCard: cardName,
-					lowPrice: lowPrice,
-					mediumPrice: mediumPrice,
-					highPrice: highPrice,
-					averageLowPrice: averageLowPrice,
-					averageMediumPrice: averageMedPrice,
-					averageHighPrice: averageHighPrice,
+					price: price,
+					average: average,
 					source: source,
 					set: setName
 				}).exec(

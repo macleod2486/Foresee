@@ -25,17 +25,7 @@ module.exports = {
 		type:'string'
 	},
 
-	lowPrice:
-	{
-		type:'string'
-	},
-
-	mediumPrice:
-	{
-		type:'string'
-	},
-
-	highPrice:
+	price:
 	{
 		type:'string'
 	},
