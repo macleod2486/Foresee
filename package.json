@@ -17,10 +17,10 @@
     "grunt-contrib-uglify": "~0.4.0",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-sails-linker": "~0.9.5",
-    "grunt-sync": "~0.0.4",
+    "grunt-sync": "0.0.8",
     "include-all": "^0.1.6",
     "rc": "^0.5.5",
-    "sails": "^0.12.6",
+    "sails": "^0.12.11",
     "sails-disk": "^0.10.10",
     "sails-postgresql": "^0.12.2",
     "winston": "^1.1.2"
