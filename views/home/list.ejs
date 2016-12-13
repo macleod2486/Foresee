@@ -3,7 +3,22 @@
 
 	<div class="menu">
 		<form role="search" method="POST">
-			<input type="text" name = "search" value="Card name" />
+                        <%
+                          var search = req.param('search');
+                          if(!search)
+                               search = ""; 
+                        %>
+			    <input type="text" name = "search" value="<%= search%>" />
+                        <%
+                            var source;
+                            for(var index = 0; index < sources.length; index++)
+                            {
+                                source = sources[index]
+                        %>
+                                <input type="radio" value = "<%=source ['source'] %>" name = "source"> <%= source['source'] %> </>
+                        <%
+                            }
+                        %>
 			<button type="submit">Search</>
 		</form>	
 	</div>

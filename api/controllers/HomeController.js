@@ -22,26 +22,65 @@ module.exports =
 	{
 		if(req.method == 'POST')
 		{
-			sails.models.average.find(
-					{
-						nameOfCard:{'like' : '%'+req.param('search')+'%'},
-						sort: 'nameOfCard asc'
-					}
-					).exec(
-					
-					function(error, cards)
-					{
-						sails.log("Number found "+cards.length);
-						res.view({cards: cards});
-					}
+                        var source = req.param("source");
+                        var sources = req.session.sources;
+                    
+                        if(source)
+                        {
+                            sails.models.average.find(
+                                            {
+                                                    nameOfCard:{'like' : '%'+req.param('search')+'%'},
+                                                    source: source,
+                                                    sort: 'nameOfCard asc'
+                                            }
+                                            ).exec(
+                                            
+                                            function(error, cards)
+                                            {
+                                                    sails.log("Number found "+cards.length);
+                                                    res.view({cards: cards, sources: req.session.sources});
+                                            }
 
-					);
+                                            );
+                        }
+                        else
+                        {
+                            sails.models.average.find(
+                                            {
+                                                    nameOfCard:{'like' : '%'+req.param('search')+'%'},
+                                                    sort: 'nameOfCard asc'
+                                            }
+                                            ).exec(
+                                            
+                                            function(error, cards)
+                                            {
+                                                    sails.log("Number found "+cards.length);
+                                                    res.view({cards: cards, sources: req.session.sources});
+                                            }
+
+                                            );
+                        }
 		}
 
 		else
 		{
-			res.view({cards: ''});
+                        var query = "select distinct on(source) source from average";
+
+                        sails.models.average.query(
+                        query,
+                        function(error, sources)
+                        {
+                            if(error)
+                            {
+                                res.serverError(error);
+                            }
+
+                            else
+                            {
+                                req.session.sources = sources.rows;
+                                res.view({cards: '', sources: sources.rows});
+                            }
+                        });
 		}
 	}
 };
-
