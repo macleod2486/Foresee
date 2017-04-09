@@ -5,6 +5,8 @@
   "description": "Sails application to predict prices",
   "keywords": [],
   "dependencies": {
+    "commander": "^2.9.0",
+    "cookie": "^0.3.1",
     "ejs": "^0.8.8",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
@@ -19,8 +21,9 @@
     "grunt-sails-linker": "~0.9.5",
     "grunt-sync": "0.0.8",
     "include-all": "^0.1.6",
+    "minimist": "^1.2.0",
     "rc": "^0.5.5",
-    "sails": "^0.12.11",
+    "sails": "^0.12.13",
     "sails-disk": "^0.10.10",
     "sails-postgresql": "^0.12.2",
     "winston": "^1.1.2"
