@@ -219,31 +219,34 @@ module.exports = {
 		var average = req.param("average");
 		var source = req.param("source");
 
-		sails.models.average.update(
-		{
-			nameOfCard: cardName, 
-			set:setName,
-			source: source
-		},
-		{
-			price: price,
-			average: average,
-		}
-		).exec(
-			function(error, records)
-			{
-				if(error)
-				{
-					sails.log(error);
-					res.serverError(error);
-				}
+                if(cardName && setName && price && average && source)
+                {
+                    sails.models.average.update(
+                    {
+                            nameOfCard: cardName, 
+                            set:setName,
+                            source: source
+                    },
+                    {
+                            price: price,
+                            average: average,
+                    }
+                    ).exec(
+                            function(error, records)
+                            {
+                                    if(error)
+                                    {
+                                            sails.log(error);
+                                            res.serverError(error);
+                                    }
 
-				else
-				{
-					res.ok("Record updated");
-				}
-			}
-		);
+                                    else
+                                    {
+                                            res.ok("Record updated");
+                                    }
+                            }
+                    );
+                }
 	},
 
 	insertAverage: function(req, res)
