@@ -247,6 +247,11 @@ module.exports = {
                             }
                     );
                 }
+
+                else
+		{
+			res.serverError("Error in parameters");
+		}
 	},
 
 	insertAverage: function(req, res)
