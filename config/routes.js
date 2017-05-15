@@ -86,6 +86,11 @@ module.exports.routes = {
   '/getDistinctListCount': {
 	  controller: 'GathererController',
 	  action: 'getDistinctListCount'
+  },
+
+  '/manager': {
+          controller: 'ManagerController',
+          action: 'login'
   }
 
   /***************************************************************************

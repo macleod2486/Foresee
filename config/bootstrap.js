@@ -13,5 +13,25 @@ module.exports.bootstrap = function(cb) {
 
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+
+  sails.models.manager.findOrCreate
+  (
+       {username: 'admin', password: 'test', type: 'manager'},
+       {username: 'admin', password: 'test', type: 'manager'} 
+  ).exec(
+  function(error, record)
+  {
+        if(!error)
+        {
+            sails.log("Error initalizing manager");
+            sails.log(error);
+        }
+        else
+        {
+            sails.log("No error");
+        }
+
+        cb();
+  });
+
 };
