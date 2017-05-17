@@ -33,11 +33,11 @@ module.exports =
                 password: password
             }
             ).exec(
-                function(error, password)
+                function(error, user)
                 {
-                    if(!error)
+                    if(!error && user[0]['username'])
                     {
-                       res.redirect("list"); 
+                       res.redirect("/manager/list"); 
                     }
                     else
                     {
