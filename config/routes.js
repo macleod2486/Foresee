@@ -90,7 +90,7 @@ module.exports.routes = {
 
   '/manager': {
           controller: 'ManagerController',
-          action: 'login'
+          action: 'reset'
   }
 
   /***************************************************************************

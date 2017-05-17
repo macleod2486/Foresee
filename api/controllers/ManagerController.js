@@ -18,6 +18,12 @@
 
 module.exports =
 {
+    reset: function(req,res)
+    {
+        req.session.user = "";
+        res.redirect('/manager/login');
+    },
+
     login: function(req,res)
     {
         //handle login
@@ -35,9 +41,18 @@ module.exports =
             ).exec(
                 function(error, user)
                 {
-                    if(!error && user[0]['username'])
+                    if(!user && user[0])
                     {
-                       res.redirect("/manager/list"); 
+                        if(user[0]['username'] && user[0]['type'] == 'manager')
+                        {
+                           req.session.user = user[0]['username'];
+                           
+                           res.redirect("/manager/list"); 
+                        }
+                        else
+                        {
+                            res.view();
+                        }
                     }
                     else
                     {
@@ -48,28 +63,37 @@ module.exports =
         }
         else
         {
+            req.session.user = "";
             res.view();
         }
     },
     
     list: function(req,res)
     {
-        sails.models.manager.find(
+        if(req.session.user)
         {
-            username: '*'
-        }
-        ).exec(
-            function(error, records)
+            sails.models.manager.find(
             {
-                if(!error)
-                {
-                    res.view({users: records});
-                }
-                else
-                {
-                    res.serverError(error);
-                }
+                username: '*'
             }
-        );
+            ).exec(
+                function(error, records)
+                {
+                    if(!error)
+                    {
+                        res.view({users: records});
+                    }
+                    else
+                    {
+                        res.serverError(error);
+                    }
+                }
+            );
+        }
+
+        else
+        {
+            res.redirect('/manager');
+        }
     } 
 };
