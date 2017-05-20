@@ -73,7 +73,7 @@ module.exports =
         {
             sails.models.manager.find(
             {
-                username: '*'
+                username: { '!' : ['null']}
             }
             ).exec(
                 function(error, records)
