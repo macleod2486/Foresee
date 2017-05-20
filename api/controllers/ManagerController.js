@@ -31,7 +31,6 @@ module.exports =
         {
             var username = req.param("username");
             var password = req.param("password");
-            sails.log("Username "+username+" Password "+password);
 
             sails.models.manager.find(
             {
@@ -41,7 +40,7 @@ module.exports =
             ).exec(
                 function(error, user)
                 {
-                    if(!user && user[0])
+                    if(user && user[0])
                     {
                         if(user[0]['username'] && user[0]['type'] == 'manager')
                         {
