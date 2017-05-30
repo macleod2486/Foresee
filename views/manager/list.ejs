@@ -1,29 +1,37 @@
+<div class="container">
 <div>
 	<title>Landing page</title>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <%
-                  var user;
-                  for(var index = 0; index < users.length; index++)
-                  {
-                    user = users[index];
-                %> 
-                   <tr>
-                       <td><%= user['username']%></td>
-                       <td><%= user['type']%></td>
-                       <td><input type="checkbox" class="radio" name="user" value="<%=user['id']%>" /></td>
-                   </tr>
-                <%}%>
-                <tr>
-                    <td><input type="button" value="Delete User"/></td>
-                </tr>
-            </tbody>
-        </table>
+        <form method="POST">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%
+                      if(users)
+                      {
+                          var user;
+                          for(var index = 0; index < users.length; index++)
+                          {
+                            user = users[index];
+                        %> 
+                           <tr>
+                               <td><%= user['username']%></td>
+                               <td><%= user['type']%></td>
+                               <td><input type="checkbox" class="radio" name="user" value="<%=user['id']%>" /></td>
+                           </tr>
+                    <%    }
+                      }%>
+                    <tr>
+                        <td><button class="btn" type="submit" >Delete User</button></td>
+                        <td><a href="adduser" class="btn btn-primary">Add user</a> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+</div>
 </div>
