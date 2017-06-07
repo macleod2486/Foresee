@@ -137,11 +137,10 @@ module.exports =
                 
                 if(username && password && role)
                 {
-                    console.log();
-                    sails.models.findOrCreate
+                    sails.models.manager.findOrCreate
                     (
                         {username: username},
-                        {username: username, password: password, role: role}
+                        {username: username, password: password, type: role}
                     ).exec
                     (
                         function (error, records)
