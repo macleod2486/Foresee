@@ -72,24 +72,67 @@ module.exports =
         if(req.method == 'POST')
         {
             //handle post
-            console.log("User "+req.param("user"));
-            sails.models.manager.find(
+            var listOfUsers = req.param("user");
+            
+            if(req.param("delete"))
+            {
+                for(var index = 0; index < listOfUsers.length; index++)
                 {
-                    username: { '!' : ['null']}
-                }
-                ).exec(
-                    function(error, records)
+                    sails.models.manager.destroy(
                     {
-                        if(!error)
-                        {
-                            res.view({users: records});
-                        }
-                        else
-                        {
-                            res.serverError(error);
-                        }
+                        id: listOfUsers[index],
+                        username: { '!' : [req.session.user]}
+                    }).exec(
+                    function (err)
+                    {
+                       if(err)
+                       {
+                            res.serverError(err);
+                       }
+                       else
+                       {
+                            sails.models.manager.find(
+                            {
+                                username: { '!' : ['null']}
+                            }
+                            ).exec(
+                                function(error, records)
+                                {
+                                    if(!error)
+                                    {
+                                        res.view({users: records});
+                                    }
+                                    else
+                                    {
+                                        res.serverError(error);
+                                    }
+                                }
+                            );
+                       }
+                    });
+                }
+            }
+
+            else
+            {
+                sails.models.manager.find(
+                    {
+                        username: { '!' : ['null']}
                     }
-                );
+                    ).exec(
+                        function(error, records)
+                        {
+                            if(!error)
+                            {
+                                res.view({users: records});
+                            }
+                            else
+                            {
+                                res.serverError(error);
+                            }
+                        }
+                    );
+            }
         }
 
         else
