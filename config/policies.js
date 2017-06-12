@@ -59,5 +59,12 @@ module.exports.policies = {
         updateAverage: ['insertAuth'],
         insertAverage: ['insertAuth'],
         deleteOld: ['insertAuth']
+    },
+
+    ManagerController:
+    {
+        '*': 'managerAuth',
+        login: true,
+        reset: true
     }
 };

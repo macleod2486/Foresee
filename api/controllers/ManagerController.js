@@ -20,7 +20,7 @@ module.exports =
 {
     reset: function(req,res)
     {
-        req.session.user = "";
+        req.session.managerUser = "";
         res.redirect('/manager/login');
     },
 
@@ -44,7 +44,7 @@ module.exports =
                     {
                         if(user[0]['username'] && user[0]['type'] == 'manager')
                         {
-                           req.session.user = user[0]['username'];
+                           req.session.managerUser = user[0]['username'];
                            
                            res.redirect("/manager/list"); 
                         }
@@ -62,7 +62,7 @@ module.exports =
         }
         else
         {
-            req.session.user = "";
+            req.session.managerUser = "";
             res.view();
         }
     },
@@ -137,66 +137,48 @@ module.exports =
 
         else
         {
-            if(req.session.user)
+            sails.models.manager.find(
             {
-                sails.models.manager.find(
+                username: { '!' : ['null']}
+            }
+            ).exec(
+                function(error, records)
                 {
-                    username: { '!' : ['null']}
-                }
-                ).exec(
-                    function(error, records)
+                    if(!error)
                     {
-                        if(!error)
-                        {
-                            res.view({users: records});
-                        }
-                        else
-                        {
-                            res.serverError(error);
-                        }
+                        res.view({users: records});
                     }
-                );
-            }
-
-            else
-            {
-                res.redirect('/manager');
-            }
+                    else
+                    {
+                        res.serverError(error);
+                    }
+                }
+            );
         }
     },
 
     adduser: function(req,res)
     {
-        if(req.session.user)
+        if(req.method == 'POST')
         {
-            if(req.method == 'POST')
+            var username = req.param("username");
+            var password = req.param("password");
+            var role = req.param("role");
+            
+            if(username && password && role)
             {
-                console.log("User "+req.param("username"));
-                console.log("Pass "+req.param("password"));
-                console.log("Role "+req.param("role"));
-                var username = req.param("username");
-                var password = req.param("password");
-                var role = req.param("role");
-                
-                if(username && password && role)
-                {
-                    sails.models.manager.findOrCreate
-                    (
-                        {username: username},
-                        {username: username, password: password, type: role}
-                    ).exec
-                    (
-                        function (error, records)
-                        {
-                            console.log(records);
-                            res.view();
-                        }
-                    );
-                }
-                else
-                {
-                    res.view();
-                }
+                sails.models.manager.findOrCreate
+                (
+                    {username: username},
+                    {username: username, password: password, type: role}
+                ).exec
+                (
+                    function (error, records)
+                    {
+                        console.log(records);
+                        res.view();
+                    }
+                );
             }
             else
             {
@@ -205,7 +187,7 @@ module.exports =
         }
         else
         {
-            res.redirect('/manager');
+            res.view();
         }
     }
 };
