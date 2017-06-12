@@ -48,4 +48,12 @@ module.exports.policies = {
 		// before letting any users feed our rabbits
 		// feed : ['isNiceToAnimals', 'hasRabbitFood']
 	// }
+    GathererController:
+    {
+        '*': true,
+        getList: ['queueAuth'],
+        getListCount: ['queueAuth'],
+        getDistinctList: ['queueAuth'],
+        getDistinctListCount: ['queueAuth'],
+    }
 };
