@@ -55,6 +55,7 @@ module.exports.policies = {
         getListCount: ['queueAuth'],
         getDistinctList: ['queueAuth'],
         getDistinctListCount: ['queueAuth'],
+        averageRecordSearch: ['queueAuth'],
         insert: ['insertAuth'],
         updateAverage: ['insertAuth'],
         insertAverage: ['insertAuth'],
