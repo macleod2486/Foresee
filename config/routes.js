@@ -37,6 +37,10 @@ module.exports.routes = {
     action: 'list'
   },
 
+  '/api': {
+    controller: 'HomeController',
+    action: 'api'
+  },
   '/insert': {
 	  controller: 'GathererController',
 	  action: 'insert',
