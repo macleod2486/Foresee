@@ -330,5 +330,64 @@ module.exports = {
 		{
 			res.serverError("Error in parameters");
 		}
-	}
+	},
+        
+        search: function(req,res)
+        {
+            var source = req.param('source');
+            var nameOfCard = req.param('nameOfCard');
+
+            if(source && nameOfCard)
+            {
+                sails.models.average.find(
+                                {
+                                        nameOfCard:{'like' : '%'+nameOfCard+'%'},
+                                        source: source,
+                                        sort: 'nameOfCard asc'
+                                }
+                                ).exec(
+                                
+                                function(error, cards)
+                                {
+                                        sails.log("Number found "+cards.length);
+                                        res.ok(cards);
+                                }
+
+                                );
+            }
+            else
+            {
+                res.serverError("Missing parameter");
+            }
+        },
+
+       	price: function(req,res)
+	{
+            var cardName = req.param("cardName");
+            var set = req.param("set");
+            var source = req.param("source");
+
+            if(cardName && set)
+            {
+                sails.models.average.find(
+                {
+                        nameOfCard:cardName,
+                        set: set,
+                        source: source
+                }
+                ).exec(
+                
+                function(error, cards)
+                {
+                        sails.log("Number found "+cards.length);
+                        res.ok(cards);
+                }
+
+                );
+            }
+            else
+            {
+                res.serverError("Missing parameter");
+            }
+        }
 };

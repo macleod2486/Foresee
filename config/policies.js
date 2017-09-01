@@ -59,7 +59,9 @@ module.exports.policies = {
         insert: ['insertAuth'],
         updateAverage: ['insertAuth'],
         insertAverage: ['insertAuth'],
-        deleteOld: ['insertAuth']
+        deleteOld: ['insertAuth'],
+        search: ['queueAuth'],
+        price: ['queueAuth']
     },
 
     ManagerController:

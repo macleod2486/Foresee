@@ -37,10 +37,16 @@ module.exports.routes = {
     action: 'list'
   },
 
-  '/api': {
-    controller: 'HomeController',
-    action: 'api'
+  '/search': {
+    controller: 'GathererController',
+    action: 'search'
   },
+
+  '/price': {
+    controller: 'GathererController',
+    action: 'price'
+  },
+
   '/insert': {
 	  controller: 'GathererController',
 	  action: 'insert',

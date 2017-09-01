@@ -83,30 +83,4 @@ module.exports =
                         });
 		}
 	},
-
-       	api: function(req,res)
-	{
-            var cardName = req.param("cardName");
-            var set = req.param("set");
-            var source = req.param("source");
-
-            if(cardName && set)
-            {
-                sails.models.average.find(
-                {
-                        nameOfCard:cardName,
-                        set: set,
-                        source: source
-                }
-                ).exec(
-                
-                function(error, cards)
-                {
-                        sails.log("Number found "+cards.length);
-                        res.ok(cards);
-                }
-
-                );
-            }
-        }
 };
